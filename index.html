@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section id="all">
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item" id="phone-area">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="mobile-minus-btn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="phone-amount" type="text" class="form-control text-center" value="0">
+                           <button id="mobile-plus-btn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="phone-price">00</span> </h5>
+                        <img src="images/remove.png" alt="" id="remove-phone" class="remove-item">
+                        
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item" id="cover-area">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="cover-minus-btn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="cover-amount" type="text" class="form-control text-center" value="0">
+                           <button id="cover-plus-btn" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="cover-price">00</span></h5>
+                        <img src="images/remove.png" alt="" id="remove-cover" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subtotal">00</span> </h5>
+                        <h5 id="tax">$0</h5>
+                        <h5 id="grand-total">$1,278</h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out" id="check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <div id="congrates">
+      <h1 id="cong">!!Congratulations!! <br> You got your new Phone and Case </h1>
+   </div>
+
+
+   <script>
+         document.getElementById("mobile-minus-btn").addEventListener("click",function () {
+            productCalculator("phone-amount","phone-price",false)                
+         })
+
+         document.getElementById("mobile-plus-btn").addEventListener("click",function () {
+            productCalculator("phone-amount","phone-price",true)
+         })
+
+         document.getElementById("cover-minus-btn").addEventListener("click",function(){
+            productCalculator("cover-amount","cover-price",false)
+         })
+
+         document.getElementById("cover-plus-btn").addEventListener("click",function(){
+            productCalculator("cover-amount","cover-price",true)
+         })
+
+         document.getElementById("remove-phone").addEventListener("click",function(){
+            document.getElementById("phone-area").style.display = "none" ;
+         })
+         document.getElementById("remove-cover").addEventListener("click",function(){
+            document.getElementById("cover-area").style.display = "none" ;
+         })
+         document.getElementById("check-out").addEventListener("click",function () {
+            document.getElementById("congrates").style.display="block";
+            document.getElementById("all").style.display="none";
+         })
+
+         function productCalculator(productId,productPriceId,increase) {
+            const phoneAmount=  document.getElementById(productId);
+            const phoneAmountNumber = parseInt(phoneAmount.value);
+            let updatedPhoneAmount = phoneAmountNumber;
+               if (increase == true) {
+               updatedPhoneAmount = phoneAmountNumber + 1 ;
+               }
+               if (increase == false && phoneAmountNumber > 0 ) {
+               updatedPhoneAmount = phoneAmountNumber - 1 ;
+               }
+                  phoneAmount.value = updatedPhoneAmount ;
+            const phonePrice = document.getElementById(productPriceId);
+            let updatedPhonePrice = updatedPhoneAmount ;
+               if (productId == "phone-amount") {
+               updatedPhonePrice = updatedPhoneAmount * 1219 ;
+                }
+               if (productId == "cover-amount") {
+               updatedPhonePrice = updatedPhoneAmount * 59 ;
+                }
+                  phonePrice.innerText = updatedPhonePrice ;
+
+                  
+                  const phoneTotalNumberValue = parseInput("phone-amount");             
+                  
+                  const coverTotalNumberValue = parseInput("cover-amount");
+                
+                  
+                  const subTotal = phoneTotalNumberValue * 1219 + coverTotalNumberValue * 59 ;
+                     document.getElementById("subtotal").innerText = subTotal ;
+
+                 const tax =  subTotal / 35 ;
+                 const taxNumber = Math.round(tax);
+                     document.getElementById("tax").innerText = taxNumber ;
+
+                  const grandTotal = subTotal + taxNumber ;
+                     document.getElementById("grand-total").innerText = grandTotal ;
+
+                  function parseInput(productId) {
+                     const coverTotalValue = document.getElementById(productId);
+                     const coverTotalNumberValue = parseInt(coverTotalValue.value);
+                     return coverTotalNumberValue ;
+                  }
+
+         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // mobile phone area
+      
+   //   document.getElementById("mobile-plus-btn").addEventListener("click",function () {
+   //    mobileSetHandler(true,"phone");
+   //   })
+   //   document.getElementById("mobile-minus-btn").addEventListener("click",function () {
+   //    mobileSetHandler(false,"phone");
+   //   })
+
+   // cover area
+     
+   // document.getElementById("cover-plus-btn").addEventListener("click",function () {
+   //    mobileSetHandler(true,"cover");
+   // })
+   //   document.getElementById("cover-minus-btn").addEventListener("click",function () {
+   //    mobileSetHandler(false,"cover");
+   // })
+
+   //   function mobileSetHandler(Increase,product) {
+   //       const productAmount = document.getElementById(product+"-amount");
+   //       const totalProductAmount = parseInt(productAmount.value);
+   //       let updatedProductAmount = totalProductAmount;
+   //    if (Increase == true) {
+   //       updatedProductAmount = totalProductAmount + 1 ;
+   //    }
+   //    if (Increase == false && updatedProductAmount > 0){
+   //       updatedProductAmount = totalProductAmount - 1 ;
+   //    }
+   //       productAmount.value = updatedProductAmount;
+
+   //       let productTotal = 0;
+      
+   //    if (product == "phone") {
+   //        productTotal = updatedProductAmount * 1219;
+   //    }
+   //    if (product == "cover") {
+   //       productTotal = updatedProductAmount * 59;
+   //    }
+   //       document.getElementById(product+"-price").innerText = productTotal;
+   //       total();
+   //     }
+    
+
+   //   function total() {
+   //       const phoneAmountNumber = parseInput("phone");
+
+   //       const coverAmountNumber = parseInput("cover");
+
+   //       const subTotal = phoneAmountNumber * 1219 + coverAmountNumber * 59 ;
+   //       document.getElementById("subtotal").innerText = subTotal;
+
+   //       const tax = subTotal / 20;
+   //       const totalTax = Math.round(tax);
+   //       document.getElementById("tax").innerText = totalTax;
+
+   //       const grandTotal = subTotal + totalTax;
+   //       document.getElementById("grand-total").innerText = grandTotal;
+   //   }
+
+   //   function parseInput(product) {
+   //       const productAmount = document.getElementById(product + "-amount");
+   //       const productAmountNumber = parseInt(productAmount.value);
+   //       return productAmountNumber;
+   //   }
+
+   </script>
+</body>
+
+</html>
